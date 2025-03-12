@@ -4,6 +4,7 @@ import { googleLogout } from "@react-oauth/google";
 import { Error } from "@/types";
 import { getSubscriptions, getUserInfo } from "@/queries";
 import { errorToast } from "@/utils";
+import { SUBSCRIPTIONS } from "@/data";
 import { Login } from "./Login";
 import { Profile } from "./Profile";
 import { Subscriptions } from "./Subscriptions";
@@ -64,7 +65,8 @@ export const Source = () => {
 
     if (sourceToken) {
       setIsLoadingSubscriptions(true);
-      getSubscriptionsData();
+      // getSubscriptionsData();
+      updateSubscriptions(SUBSCRIPTIONS);
     } else {
       updateSubscriptions(null);
     }
@@ -95,7 +97,7 @@ export const Source = () => {
         )}
       </div>
 
-      <div className="my-[40px]">
+      <div className="mt-[40px]">
         <Subscriptions
           subscriptions={subscriptions}
           selectedSubscriptions={selectedSubscriptions}

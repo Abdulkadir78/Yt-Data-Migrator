@@ -1,4 +1,4 @@
-export const subs = [
+export const SUBSCRIPTIONS = [
   {
     kind: "youtube#subscription",
     etag: "i4Yp3GE0yGygZm3r42ufSjJ6MUc",

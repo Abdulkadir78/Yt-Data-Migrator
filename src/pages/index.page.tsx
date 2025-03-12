@@ -13,17 +13,17 @@ const Home = () => {
     >
       <AuthProvider>
         <SubscriptionsProvider>
-          <div className="container px-[16px] mx-auto mt-[40px] ">
+          <div className="container px-[16px] mx-auto my-[40px]">
             <div>
               <h1 className="text-[28px] lg:text-[32px] font-semibold border-b border-gray-200 pb-[8px]">
-                Youtube Data Migrator
+                <span className="text-red-600">Youtube</span> Data Migrator
               </h1>
 
-              <div className="grid grid-cols-2 gap-[40px] min-h-[88vh]">
+              <div className="grid md:grid-cols-2 gap-[40px] min-h-[88vh]">
                 <div className="pt-[16px]">
                   <Source />
                 </div>
-                <div className="border-l border-gray-200 pl-[40px] pt-[16px]">
+                <div className="md:border-l md:border-gray-200 md:pl-[40px] md:pt-[16px]">
                   <Destination />
                 </div>
               </div>
