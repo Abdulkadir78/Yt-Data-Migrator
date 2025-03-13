@@ -52,7 +52,7 @@ export interface TSubscription {
 export interface SubscriptionsResponse {
   kind: string;
   etag: string;
-  nextPageToken: string;
+  nextPageToken?: string;
   pageInfo: {
     totalResults: number;
     resultsPerPage: number;
@@ -60,9 +60,12 @@ export interface SubscriptionsResponse {
   items: TSubscription[];
 }
 
+type GetSubscriptionsError = AxiosError<{ error: { message: string } }>;
+
 export const getSubscriptions = async (nextPageToken?: string) => {
   try {
-    let url = "/subscriptions?part=snippet%2CcontentDetails&mine=true";
+    let url =
+      "/subscriptions?part=snippet%2CcontentDetails&maxResults=50&mine=true";
 
     if (nextPageToken) {
       url += `&pageToken=${nextPageToken}`;
@@ -71,7 +74,11 @@ export const getSubscriptions = async (nextPageToken?: string) => {
     const response = await axios.get<SubscriptionsResponse>(url);
     return response.data;
   } catch (error) {
-    throw new Error("Could not fetch subscriptions");
+    throw new Error(
+      `Could not fetch subscriptions: ${
+        (error as GetSubscriptionsError).response?.data?.error?.message
+      }`
+    );
   }
 };
 
@@ -97,6 +104,58 @@ export const postSubscription = async (params: PostSubscriptionParams) => {
     throw new Error(
       `${(error as PostSubscriptionError).response?.data?.error?.message}: ${
         params.channelName
+      }`
+    );
+  }
+};
+
+export interface TPlaylist {
+  kind: string;
+  etag: string;
+  id: string;
+  snippet: {
+    publishedAt: string;
+    channelId: string;
+    title: string;
+    description: string;
+    thumbnails: {
+      default: { url: string; width: number; height: number };
+      medium: { url: string; width: number; height: number };
+      high: { url: string; width: number; height: number };
+      standard: { url: string; width: number; height: number };
+      maxres?: { url: string; width: number; height: number };
+    };
+    channelTitle: string;
+    localized: { title: string; description: string };
+  };
+  contentDetails: { itemCount: number };
+}
+
+interface PlaylistsResponse {
+  kind: string;
+  etag: string;
+  nextPageToken?: string;
+  pageInfo: { totalResults: number; resultsPerPage: number };
+  items: TPlaylist[];
+}
+
+type GetPlaylistsError = AxiosError<{ error: { message: string } }>;
+
+export const getPlaylists = async (nextPageToken?: string) => {
+  try {
+    let url =
+      "/playlists?part=snippet%2CcontentDetails&maxResults=50&mine=true";
+
+    if (nextPageToken) {
+      url += `&pageToken=${nextPageToken}`;
+    }
+
+    const response = await axios.get<PlaylistsResponse>(url);
+    return response.data;
+  } catch (error) {
+    throw new Error(
+      `Could not fetch playlists: ${
+        (error as GetPlaylistsError).response?.data?.error?.message
       }`
     );
   }

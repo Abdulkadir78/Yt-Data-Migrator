@@ -477,3 +477,78 @@ export const SUBSCRIPTIONS = [
     },
   },
 ];
+
+export const PLAYLISTS = [
+  {
+    kind: "youtube#playlist",
+    etag: "EbN6tjXMdjbd-NKTBD5sTdBoQlQ",
+    id: "PLBQrPQHlQ-PLuRsEkYTKVCDd5gz99wcWS",
+    snippet: {
+      publishedAt: "2025-03-13T11:01:25Z",
+      channelId: "",
+      title: "Test 2",
+      description: "",
+      thumbnails: {
+        default: {
+          url: "https://i.ytimg.com/img/no_thumbnail.jpg",
+          width: 120,
+          height: 90,
+        },
+        medium: {
+          url: "https://i.ytimg.com/img/no_thumbnail.jpg",
+          width: 320,
+          height: 180,
+        },
+        high: {
+          url: "https://i.ytimg.com/img/no_thumbnail.jpg",
+          width: 480,
+          height: 360,
+        },
+      },
+      channelTitle: "",
+      localized: {
+        title: "Test 2",
+        description: "",
+      },
+    },
+    contentDetails: {
+      itemCount: 0,
+    },
+  },
+  {
+    kind: "youtube#playlist",
+    etag: "GFxzFXrOx1PmzLnvqmaUvACet9s",
+    id: "PLBQrPQHlQ-PJzpJB65WbFafu4DW7cnMYa",
+    snippet: {
+      publishedAt: "2025-03-08T14:02:42.155553Z",
+      channelId: "",
+      title: "Test",
+      description: "",
+      thumbnails: {
+        default: {
+          url: "https://i.ytimg.com/img/no_thumbnail.jpg",
+          width: 120,
+          height: 90,
+        },
+        medium: {
+          url: "https://i.ytimg.com/img/no_thumbnail.jpg",
+          width: 320,
+          height: 180,
+        },
+        high: {
+          url: "https://i.ytimg.com/img/no_thumbnail.jpg",
+          width: 480,
+          height: 360,
+        },
+      },
+      channelTitle: "",
+      localized: {
+        title: "Test",
+        description: "",
+      },
+    },
+    contentDetails: {
+      itemCount: 0,
+    },
+  },
+];

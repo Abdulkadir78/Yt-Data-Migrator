@@ -29,7 +29,7 @@ export const Subscriptions: React.FC<SubscriptionsProps> = ({
           <div className="flex items-center gap-[4px]">
             <input
               type="checkbox"
-              id="select-all"
+              id="select-all-subscriptions"
               className={areCheckboxesDisabled ? "" : "cursor-pointer"}
               disabled={areCheckboxesDisabled}
               checked={selectedSubscriptions.length === subscriptions?.length}
@@ -38,7 +38,7 @@ export const Subscriptions: React.FC<SubscriptionsProps> = ({
               }}
             />
             <label
-              htmlFor="select-all"
+              htmlFor="select-all-subscriptions"
               className={`text-[14px] ${
                 areCheckboxesDisabled ? "" : "cursor-pointer"
               }`}
@@ -89,7 +89,7 @@ export const Subscriptions: React.FC<SubscriptionsProps> = ({
                 <img
                   src={sub.snippet?.thumbnails?.default?.url}
                   alt="channel profile"
-                  className="w-[32px] h-[32px] rounded-full"
+                  className="w-[32px] h-[32px] rounded-full object-cover"
                 />
                 <span className="font-medium text-[14px] truncate">
                   {sub.snippet?.title}
