@@ -91,14 +91,11 @@ type PostSubscriptionError = AxiosError<{ error: { message: string } }>;
 
 export const postSubscription = async (params: PostSubscriptionParams) => {
   try {
-    await axios2.post(
-      "https://youtube.googleapis.com/youtube/v3/subscriptions?part=snippet",
-      {
-        snippet: {
-          resourceId: { kind: "youtube#channel", channelId: params.channelId },
-        },
-      }
-    );
+    await axios2.post("/subscriptions?part=snippet", {
+      snippet: {
+        resourceId: { kind: "youtube#channel", channelId: params.channelId },
+      },
+    });
   } catch (error) {
     // throw new Error(`Could not subscribe to channel: ${params.channelName}`);
     throw new Error(
@@ -157,6 +154,31 @@ export const getPlaylists = async (nextPageToken?: string) => {
       `Could not fetch playlists: ${
         (error as GetPlaylistsError).response?.data?.error?.message
       }`
+    );
+  }
+};
+
+interface CreatePlaylistParams {
+  title: string;
+  description: string;
+}
+
+type CreatePlaylistError = AxiosError<{ error: { message: string } }>;
+
+export const createPlaylist = async (params: CreatePlaylistParams) => {
+  try {
+    await axios2.post("/playlists?part=snippet%2Cstatus", {
+      snippet: {
+        title: params.title,
+        description: params.description,
+      },
+      status: {
+        privacyStatus: "private",
+      },
+    });
+  } catch (error) {
+    throw new Error(
+      (error as CreatePlaylistError).response?.data?.error?.message
     );
   }
 };

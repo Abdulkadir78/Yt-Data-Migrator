@@ -74,8 +74,8 @@ export const Source = () => {
         }
       } catch (error) {
         errorToast((error as Error).message);
-        // this indicates that we have tried fetching subscriptions, so show empty state
-        // setting it to null indicates the user is not yet logged in
+        // 1. this indicates that we have tried fetching subscriptions, so show empty state
+        // 2. setting it to null indicates the user is not yet logged in
         updateSubscriptions([]);
       } finally {
         setIsLoadingSubscriptions(false);
@@ -105,8 +105,8 @@ export const Source = () => {
         }
       } catch (error) {
         errorToast((error as Error).message);
-        // this indicates that we have tried fetching playlists, so show empty state
-        // setting it to null indicates the user is not yet logged in
+        // 1. this indicates that we have tried fetching playlists, so show empty state
+        // 2. setting it to null indicates the user is not yet logged in
         updatePlaylists([]);
       } finally {
         setIsLoadingPlaylists(false);
