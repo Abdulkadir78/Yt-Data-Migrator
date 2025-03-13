@@ -1,5 +1,5 @@
 import { Button, ButtonProps } from "@/ui/Button";
-import { useRef } from "react";
+import { ImageWithFallback } from "@/ui/ImageWithFallback";
 
 interface ProfileProps {
   name: string;
@@ -12,20 +12,13 @@ export const Profile: React.FC<ProfileProps> = ({
   picture,
   logoutBtnProps,
 }) => {
-  const imageRef = useRef<HTMLImageElement>(null);
-
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-[8px] w-2/3">
-        <img
-          ref={imageRef}
-          src={picture || "/images/default_profile.jpg"}
+        <ImageWithFallback
+          src={picture}
+          fallbackSrc="/images/default_profile.jpg"
           alt="profile"
-          onError={() => {
-            if (imageRef.current) {
-              imageRef.current.src = "/images/default_profile.jpg";
-            }
-          }}
           className="w-[32px] h-[32px] rounded-full"
         />
 

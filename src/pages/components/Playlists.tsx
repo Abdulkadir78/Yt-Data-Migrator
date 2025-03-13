@@ -1,5 +1,6 @@
 import { TPlaylist } from "@/queries";
 import { Spinner } from "@/ui/Spinner";
+import { ImageWithFallback } from "@/ui/ImageWithFallback";
 
 interface PlaylistsProps {
   playlists: TPlaylist[] | null;
@@ -96,9 +97,10 @@ export const Playlists: React.FC<PlaylistsProps> = ({
                     }}
                   />
                 )}
-                <img
+                <ImageWithFallback
                   src={pls.snippet?.thumbnails?.default?.url}
-                  alt="channel profile"
+                  fallbackSrc="/images/default_thumbnail.jpg"
+                  alt="playlist thumbnail"
                   className="w-[32px] h-[32px] rounded-full object-cover"
                 />
                 <span className="font-medium text-[14px] truncate">

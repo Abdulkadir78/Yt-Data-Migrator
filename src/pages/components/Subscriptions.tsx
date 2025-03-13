@@ -1,5 +1,6 @@
 import { TSubscription } from "@/queries";
 import { Spinner } from "@/ui/Spinner";
+import { ImageWithFallback } from "@/ui/ImageWithFallback";
 
 interface SubscriptionsProps {
   subscriptions: TSubscription[] | null;
@@ -86,8 +87,9 @@ export const Subscriptions: React.FC<SubscriptionsProps> = ({
                     }}
                   />
                 )}
-                <img
+                <ImageWithFallback
                   src={sub.snippet?.thumbnails?.default?.url}
+                  fallbackSrc="/images/default_profile.jpg"
                   alt="channel profile"
                   className="w-[32px] h-[32px] rounded-full object-cover"
                 />
