@@ -63,7 +63,7 @@ export const Subscriptions: React.FC<SubscriptionsProps> = ({
       </div>
 
       {!!subscriptions?.length && (
-        <div className="mt-[8px] space-y-[16px] grid grid-cols-2 lg:grid-cols-3 gap-[8px]">
+        <div className="mt-[8px] space-y-[16px] grid min-[375px]:grid-cols-2 lg:grid-cols-3 gap-[8px]">
           {subscriptions?.map((sub) => {
             return (
               <label

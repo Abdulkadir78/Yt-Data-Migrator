@@ -73,7 +73,7 @@ export const Playlists: React.FC<PlaylistsProps> = ({
       </div>
 
       {!!playlists?.length && (
-        <div className="mt-[8px] space-y-[16px] grid grid-cols-2 lg:grid-cols-3 gap-[8px]">
+        <div className="mt-[8px] space-y-[16px] grid min-[375px]:grid-cols-2 lg:grid-cols-3 gap-[8px]">
           {playlists?.map((pls) => {
             return (
               <label
