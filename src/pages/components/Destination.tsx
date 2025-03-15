@@ -111,12 +111,11 @@ export const Destination = () => {
     const promises: Promise<void>[] = [];
 
     const data =
-      selectedPlaylists?.map((sub) => {
-        const title = sub.snippet.title;
-        const description = sub.snippet.description || "";
-
-        return { title, description };
-      }) || [];
+      selectedPlaylists?.map((sub) => ({
+        title: sub.snippet.title,
+        description: sub.snippet.description || "",
+        sourcePlaylistId: sub.id,
+      })) || [];
 
     data?.forEach((d) => {
       promises.push(createPlaylist(d));
@@ -133,7 +132,7 @@ export const Destination = () => {
 
     if (rejected.length) {
       errorToast(
-        "Some playlists could not be copied: " +
+        "Some playlists could not be completely copied: " +
           rejected.map((r) => r.title).join(", ")
       );
     } else {
