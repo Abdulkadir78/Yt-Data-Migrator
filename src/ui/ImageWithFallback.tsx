@@ -26,6 +26,7 @@ export const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
       ref={imgRef}
       onError={handleError}
       {...props}
+      role="img"
       src={props.src || fallbackSrc}
     />
   );
