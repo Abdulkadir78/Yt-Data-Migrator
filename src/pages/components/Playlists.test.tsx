@@ -1,56 +1,50 @@
-import userEvent from "@testing-library/user-event";
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 
-import { Subscriptions } from "./Subscriptions";
-import { SUBSCRIPTIONS } from "@/data";
+import { Playlists } from "./Playlists";
+import { PLAYLISTS } from "@/data";
 
-test("shows login to view when subscriptions is null", () => {
-  render(<Subscriptions subscriptions={null} selectedSubscriptions={[]} />);
+test("shows login to view when playlists is null", () => {
+  render(<Playlists playlists={null} selectedPlaylists={[]} />);
   const loginText = screen.getByText(/login to view/i);
   expect(loginText).toBeInTheDocument();
 });
 
-test("shows no subscriptions when subscriptions is an empty array", () => {
-  render(<Subscriptions subscriptions={[]} selectedSubscriptions={[]} />);
-  const emptyText = screen.getByText(/no subscriptions/i);
+test("shows no playlists when playlists is an empty array", () => {
+  render(<Playlists playlists={[]} selectedPlaylists={[]} />);
+  const emptyText = screen.getByText(/no playlists/i);
   expect(emptyText).toBeInTheDocument();
 });
 
-test("shows a spinner when subscriptions are loading", async () => {
-  render(
-    <Subscriptions subscriptions={[]} selectedSubscriptions={[]} isLoading />
-  );
+test("shows a spinner when playlists are loading", async () => {
+  render(<Playlists playlists={[]} selectedPlaylists={[]} isLoading />);
   const spinner = screen.getByRole("img");
   expect(spinner).toBeInTheDocument();
 });
 
-test("renders subscriptions when passed", () => {
-  render(
-    <Subscriptions subscriptions={SUBSCRIPTIONS} selectedSubscriptions={[]} />
-  );
+test("renders playlists when passed", () => {
+  render(<Playlists playlists={PLAYLISTS} selectedPlaylists={[]} />);
 
-  SUBSCRIPTIONS.forEach((s) => {
+  PLAYLISTS.forEach((s) => {
     const sub = screen.getByLabelText(s.snippet.title);
     expect(sub).toBeInTheDocument();
   });
 });
 
 test("renders a checkbox beside each subscription", async () => {
-  render(
-    <Subscriptions subscriptions={SUBSCRIPTIONS} selectedSubscriptions={[]} />
-  );
+  render(<Playlists playlists={PLAYLISTS} selectedPlaylists={[]} />);
 
   const checkboxes = screen.getAllByRole("checkbox");
 
   // +1 for the 'Select All' checkbox
-  expect(checkboxes).toHaveLength(SUBSCRIPTIONS.length + 1);
+  expect(checkboxes).toHaveLength(PLAYLISTS.length + 1);
 });
 
 test("hides checkboxes when showCheckboxes is false", () => {
   render(
-    <Subscriptions
-      subscriptions={SUBSCRIPTIONS}
-      selectedSubscriptions={[]}
+    <Playlists
+      playlists={PLAYLISTS}
+      selectedPlaylists={[]}
       showCheckboxes={false}
     />
   );
@@ -61,9 +55,9 @@ test("hides checkboxes when showCheckboxes is false", () => {
 
 test("disables all checkbox when areCheckboxesDisabled is true", () => {
   render(
-    <Subscriptions
-      subscriptions={SUBSCRIPTIONS}
-      selectedSubscriptions={[]}
+    <Playlists
+      playlists={PLAYLISTS}
+      selectedPlaylists={[]}
       areCheckboxesDisabled
     />
   );
@@ -78,9 +72,9 @@ test("call onSelectAll when 'select all' checkbox is checked", async () => {
   const onSelectAll = jest.fn();
 
   render(
-    <Subscriptions
-      subscriptions={SUBSCRIPTIONS}
-      selectedSubscriptions={[]}
+    <Playlists
+      playlists={PLAYLISTS}
+      selectedPlaylists={[]}
       onSelectAll={onSelectAll}
     />
   );
@@ -92,14 +86,10 @@ test("call onSelectAll when 'select all' checkbox is checked", async () => {
 
 test("call onCheck with correct parameters when a checkbox is checked", async () => {
   const onCheck = jest.fn();
-  const firstSub = SUBSCRIPTIONS[0];
+  const firstSub = PLAYLISTS[0];
 
   render(
-    <Subscriptions
-      subscriptions={SUBSCRIPTIONS}
-      selectedSubscriptions={[]}
-      onCheck={onCheck}
-    />
+    <Playlists playlists={PLAYLISTS} selectedPlaylists={[]} onCheck={onCheck} />
   );
 
   const checkbox = screen.getByLabelText(
@@ -110,14 +100,14 @@ test("call onCheck with correct parameters when a checkbox is checked", async ()
   expect(onCheck).toHaveBeenCalledWith(firstSub.id, true);
 });
 
-test("selectedSubscriptions if passed are checked", () => {
+test("selectedPlaylists if passed are checked", () => {
   const onCheck = jest.fn();
-  const firstSub = SUBSCRIPTIONS[0];
+  const firstSub = PLAYLISTS[0];
 
   render(
-    <Subscriptions
-      subscriptions={SUBSCRIPTIONS}
-      selectedSubscriptions={[firstSub]}
+    <Playlists
+      playlists={PLAYLISTS}
+      selectedPlaylists={[firstSub]}
       onCheck={onCheck}
     />
   );
