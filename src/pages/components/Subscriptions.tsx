@@ -4,7 +4,7 @@ import { ImageWithFallback } from "@/ui/ImageWithFallback";
 
 interface SubscriptionsProps {
   subscriptions: TSubscription[] | null;
-  selectedSubscriptions: TSubscription[];
+  selectedSubscriptions?: TSubscription[];
   onCheck?: (id: string, checked: boolean) => void;
   onSelectAll?: (checked: boolean) => void;
   showCheckboxes?: boolean;
@@ -14,7 +14,7 @@ interface SubscriptionsProps {
 
 export const Subscriptions: React.FC<SubscriptionsProps> = ({
   subscriptions,
-  selectedSubscriptions,
+  selectedSubscriptions = [],
   onCheck,
   onSelectAll,
   showCheckboxes = true,
