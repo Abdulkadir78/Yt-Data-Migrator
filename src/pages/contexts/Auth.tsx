@@ -2,7 +2,7 @@ import { createContext, useCallback, useContext, useState } from "react";
 
 import { axios, axios2 } from "@/axios";
 
-interface TAuthContext {
+export interface TAuthContext {
   sourceToken: string | null;
   destinationToken: string | null;
   updateSourceToken: (nt: string | null) => void;
