@@ -2,7 +2,7 @@ import { createContext, useCallback, useContext, useState } from "react";
 
 import { TPlaylist } from "@/queries";
 
-interface TPlaylistsContext {
+export interface TPlaylistsContext {
   playlists: TPlaylist[] | null;
   updatePlaylists: (subs: TPlaylist[] | null) => void;
   selectedPlaylists: TPlaylist[];

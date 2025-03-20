@@ -2,7 +2,7 @@ import { createContext, useCallback, useContext, useState } from "react";
 
 import { TSubscription } from "@/queries";
 
-interface TSubscriptionsContext {
+export interface TSubscriptionsContext {
   subscriptions: TSubscription[] | null;
   updateSubscriptions: (subs: TSubscription[] | null) => void;
   selectedSubscriptions: TSubscription[];

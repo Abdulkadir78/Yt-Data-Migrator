@@ -26,6 +26,7 @@ export const Button: React.FC<React.PropsWithChildren<ButtonProps>> = ({
   return (
     <button
       {...props}
+      aria-label={(props["aria-label"] || "") + (loading ? "-loading" : "")}
       className={twMerge(
         "border w-full flex flex-col items-center justify-center text-[14px] px-4 py-2 transition-colors duration-300",
         isDisabled

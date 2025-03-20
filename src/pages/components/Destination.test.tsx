@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
@@ -6,8 +6,16 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import { getUserInfo, UserInfoResponse } from "@/queries";
 import { Destination } from "./Destination";
 import { AuthProvider, TAuthContext, useAuth } from "../contexts/Auth";
-import { SubscriptionsProvider } from "../contexts/Subscriptions";
-import { PlaylistsProvider } from "../contexts/Playlists";
+import {
+  SubscriptionsProvider,
+  TSubscriptionsContext,
+  useSubscriptions,
+} from "../contexts/Subscriptions";
+import {
+  PlaylistsProvider,
+  TPlaylistsContext,
+  usePlaylists,
+} from "../contexts/Playlists";
 
 // jest.mock("../../axios", () => {
 //   return {
@@ -29,6 +37,30 @@ jest.mock("../contexts/Auth", () => {
       return {};
     }),
     AuthProvider: ({ children }: { children: React.ReactNode }) => children,
+  };
+});
+
+jest.mock("../contexts/Subscriptions", () => {
+  return {
+    useSubscriptions: jest.fn(() => {
+      return {
+        selectedSubscriptions: [],
+      };
+    }),
+    SubscriptionsProvider: ({ children }: { children: React.ReactNode }) =>
+      children,
+  };
+});
+
+jest.mock("../contexts/Playlists", () => {
+  return {
+    usePlaylists: jest.fn(() => {
+      return {
+        selectedPlaylists: [],
+      };
+    }),
+    PlaylistsProvider: ({ children }: { children: React.ReactNode }) =>
+      children,
   };
 });
 
@@ -119,12 +151,24 @@ test("resets when logged out", async () => {
   // the logout button is still displayed without mocking because mocking functions persists across tests
   // and we already mocked the getUserInfo response in the previous test
 
-  // jest.resetAllMocks() - Resets all mock implementation between tests.
-  // jest.clearAllMocks() - Clears all mocks, resets mock calls, and mock return values.
-  // jest.restoreAllMocks() - Restores all mocks to their original (unmocked) implementations.
-  // Additionally -
-  // .mockReset() - Clear a specific mock's state (like mock return values) between tests
-  // Example - (useAuth as jest.Mock).mockReset();
+  /**
+
+      1. jest.clearAllMocks() - Resets all the mocks usage data, not their implementation. 
+          In other words, it only replaces fn.mock.calls and fn.mock.instances properties of a jest mock function.
+
+      2. jest.resetAllMocks() - A superset of clearAllMocks() which also takes care of resetting the implementation to a no return function. 
+          In other words, it will replace the mock function with a new jest.fn(), not just its fn.mock.calls and fn.mock.instances.
+
+      3. jest.restoreAllMocks() - Similar to resetAllMocks(), with one very important difference. It restores the original implementation of "spies". 
+          So, it goes like "replace mocks with jest.fn(), but replace spies with their original implementation".
+          It works in combination with jest.spyOn()
+      
+      Additionally -
+          .mockReset() - similar to calling resetAllMocks but this is for a particular function
+          Example - (useAuth as jest.Mock).mockReset();
+        
+        ...similar for .mockClear() and .mockRestore()
+   */
 
   const mockUpdateDestinationToken = jest.fn();
 
@@ -152,4 +196,56 @@ test("resets when logged out", async () => {
   const loginBtn = screen.getByRole("button", { name: /login/i });
   expect(loginBtn).toBeInTheDocument();
   expect(logoutBtn).not.toBeInTheDocument();
+});
+
+test("copy subscriptions button shows a spinner when loading and disables copy playlists button", async () => {
+  (useAuth as jest.Mock<Partial<TAuthContext>>).mockReturnValue({
+    destinationToken: "123456",
+  });
+
+  (
+    useSubscriptions as jest.Mock<Partial<TSubscriptionsContext>>
+  ).mockReturnValue({
+    isCopyingSubscriptions: true,
+  });
+
+  renderDestination();
+
+  const copySubsBtn = await screen.findByRole("button", { name: /copy subs/i });
+  const copyPlaylistsBtn = screen.getByRole("button", { name: /copy play/i });
+
+  const subsSpinner = within(copySubsBtn).getByRole("img");
+  const playlistsSpinner = within(copyPlaylistsBtn).queryByRole("img");
+
+  expect(subsSpinner).toBeInTheDocument();
+  expect(playlistsSpinner).not.toBeInTheDocument();
+  expect(copyPlaylistsBtn).toBeDisabled();
+
+  // another way of doing it instead of using queryByRole
+  // expect(() => within(copyPlaylistsBtn).getByRole("img")).toThrow();
+});
+
+test("copy playlists button shows a spinner when loading and disables copy subscriptions button", async () => {
+  (useAuth as jest.Mock<Partial<TAuthContext>>).mockReturnValue({
+    destinationToken: "123456",
+  });
+
+  // reset previous subscriptions loading state (from previous test)
+  (useSubscriptions as jest.Mock).mockReturnValue({});
+
+  (usePlaylists as jest.Mock<Partial<TPlaylistsContext>>).mockReturnValue({
+    isCopyingPlaylists: true,
+  });
+
+  renderDestination();
+
+  const copySubsBtn = await screen.findByRole("button", { name: /copy subs/i });
+  const copyPlaylistsBtn = screen.getByRole("button", { name: /copy play/i });
+
+  const playlistsSpinner = within(copyPlaylistsBtn).getByRole("img");
+  const subsSpinner = within(copySubsBtn).queryByRole("img");
+
+  expect(playlistsSpinner).toBeInTheDocument();
+  expect(subsSpinner).not.toBeInTheDocument();
+  expect(copySubsBtn).toBeDisabled();
 });

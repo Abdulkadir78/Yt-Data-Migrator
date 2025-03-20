@@ -165,6 +165,7 @@ export const Destination = () => {
         {destinationToken && (
           <div className="my-[40px] flex gap-[16px] flex-wrap justify-center">
             <Button
+              aria-label="Copy Subscriptions"
               onClick={handleCopySubscriptions}
               className="w-[180px] h-[40px] py-0"
               loading={isCopyingSubscriptions}
@@ -174,6 +175,7 @@ export const Destination = () => {
             </Button>
 
             <Button
+              aria-label="Copy Playlists"
               onClick={handleCopyPlaylists}
               className="w-[180px] h-[40px] py-0"
               loading={isCopyingPlaylists}
