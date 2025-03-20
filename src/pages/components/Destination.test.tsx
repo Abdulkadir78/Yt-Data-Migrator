@@ -119,7 +119,7 @@ test("resets when logged out", async () => {
   // the logout button is still displayed without mocking because mocking functions persists across tests
   // and we already mocked the getUserInfo response in the previous test
 
-  // jest.resetAllMocks() - Reset all mock implementation between tests.
+  // jest.resetAllMocks() - Resets all mock implementation between tests.
   // jest.clearAllMocks() - Clears all mocks, resets mock calls, and mock return values.
   // jest.restoreAllMocks() - Restores all mocks to their original (unmocked) implementations.
   // Additionally -

@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 
 import { Button } from "./Button";
+import userEvent from "@testing-library/user-event";
 
 test("renders a button with children text", () => {
   render(<Button>Login</Button>);
@@ -46,6 +47,6 @@ test("button is not clickable when disabled", () => {
   );
 
   const button = screen.getByRole("button");
-  button.click();
+  userEvent.click(button);
   expect(handleClick).not.toHaveBeenCalled();
 });
