@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
 // import { axios2 } from "@/axios";
-import { getUserInfo } from "@/queries";
+import { getUserInfo, UserInfoResponse } from "@/queries";
 import { Destination } from "./Destination";
 import { AuthProvider, TAuthContext, useAuth } from "../contexts/Auth";
 import { SubscriptionsProvider } from "../contexts/Subscriptions";
@@ -93,7 +93,9 @@ test("displays username, profile picture, logout button, copy subscriptions butt
   // });
 
   // ***** using query mock *****
-  (getUserInfo as jest.Mock).mockResolvedValue(userData);
+  (
+    getUserInfo as jest.Mock<Promise<Partial<UserInfoResponse>>>
+  ).mockResolvedValue(userData);
 
   renderDestination();
 

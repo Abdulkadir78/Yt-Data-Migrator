@@ -1,7 +1,7 @@
 import { axios, axios2 } from "./axios";
 import { APIError, Error as TError } from "./types";
 
-interface UserInfoResponse {
+export interface UserInfoResponse {
   email: string;
   email_verified: boolean;
   family_name: string;
@@ -124,7 +124,7 @@ export interface TPlaylist {
   contentDetails: { itemCount: number };
 }
 
-interface PlaylistsResponse {
+export interface PlaylistsResponse {
   kind: string;
   etag: string;
   nextPageToken?: string;
