@@ -64,7 +64,7 @@ jest.mock("../contexts/Playlists", () => {
   };
 });
 
-// UI is a functional component, this can't by a variable like UI = <GoogleOAuthProvider>...</GoogleOAuthProvider>
+// UI is a functional component, this can't be a variable like UI = <GoogleOAuthProvider>...</GoogleOAuthProvider>
 // since a variable will not cause a re-render
 const UI = () => (
   <GoogleOAuthProvider clientId="">
